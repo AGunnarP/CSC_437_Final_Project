@@ -1,0 +1,48 @@
+.Dashboard_Container{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.Event_Container{
+
+    display:flex;
+    border: solid;
+    border-color: black;
+
+    width: 40vw;
+
+}
+
+.Event{
+
+    margin-left: -2px;
+    margin-top: -2px;
+    margin-bottom: -2px;
+
+    border: solid;
+    color:black;
+
+    padding: 1vw;
+
+    flex:1;
+
+
+}
+
+.Tick_Yes{
+
+    background-color: green;
+    width: 5vw;
+
+}
+
+.Tick_No{
+
+    background-color: red;
+    width: 5vw;
+
+
+}

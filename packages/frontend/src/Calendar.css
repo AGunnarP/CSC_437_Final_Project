@@ -1,0 +1,182 @@
+.body_container *{
+
+    margin:0px;
+
+}
+
+.Day_Headers{
+
+    display:flex;
+
+    justify-content: center;
+
+    width: 45vw;
+
+
+
+}
+
+.Day_Headers > *{
+
+    text-align: center;
+
+    flex:1;
+
+
+}
+
+.Greyed_Out{
+
+    border: 2px solid black;
+
+    cursor: pointer;
+
+}
+
+.Greyed_Out > p{
+
+    background-color: grey;
+    padding: 1vw;
+
+
+}
+
+
+
+.Day{
+
+    border: 2px solid black;
+
+    cursor: pointer;
+
+
+}
+
+.Day > p{
+
+    background-color: red;
+    padding: 1vw;
+
+
+}
+
+.Day.selected{
+
+    border: 2px solid black;
+    cursor: pointer;
+
+
+}
+
+.Day.selected > p{
+
+    background-color: black;
+    padding: 1vw;
+
+    color:  red;
+
+}
+
+.Calendar_Container{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* aligns children horizontally */
+    margin-left: 10vw;
+    margin-right: 10vw;
+
+
+}
+
+.nav_container{
+
+    display: flex;
+    margin-top: 2vh;
+
+    justify-content: center;
+
+    width: 42vw;
+
+}
+
+.nav_container > *{
+
+
+    margin: 1px;
+
+}
+
+
+.Calendar_Grid{
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    column-gap: 3.1vw;
+    row-gap: 1vw;
+
+
+}
+
+.Container_Container{
+
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.Events_Container{
+
+    display:flex;
+    justify-content: center;
+    width: 42vw;
+    
+    margin-top: 2vh;
+
+    border: solid;
+    border-color: black;
+
+}
+
+.Event{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-right: 2vw;
+
+}
+
+
+
+.Add_more_container{
+
+    display:flex;
+    width: 42vw;
+
+}
+
+.Add_More_Button{
+
+    margin-left:auto;
+    background-color: green;
+    padding: 1vh;
+    cursor: pointer;
+
+    text-decoration: none;   
+    color: inherit;          
+
+    margin-top: 2vh;
+
+}
+
+.Add_More_Button:hover{
+
+    text-decoration: none;   
+    color: inherit;   
+
+}
+
