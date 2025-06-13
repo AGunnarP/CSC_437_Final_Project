@@ -59,7 +59,9 @@ function Calendar(props : CalendarProps){
     };
 
     
-    const [selectedEvents, setSelectedEvents] = useState<string>(today.toISOString().split('T')[0]);
+    const [selectedEvents, setSelectedEvents] = useState<string>(today.toLocaleDateString('en-CA'));
+    console.log(today.toISOString().split('T')[0])
+    console.log(selectedEvents)
     console.log(`Selected events is: ${selectedEvents}`);
 
 
