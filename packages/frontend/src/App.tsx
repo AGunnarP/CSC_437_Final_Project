@@ -37,7 +37,7 @@ function App() {
       }
     
       try {
-        const response = await fetch("http://localhost:3000/api/dashboard/add", {
+        const response = await fetch("api/dashboard/add", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

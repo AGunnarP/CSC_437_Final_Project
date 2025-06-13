@@ -17,9 +17,9 @@ const STATIC_DIR = process.env.STATIC_DIR!; // "../frontend/dist"
 const staticPath = path.resolve(process.cwd(), STATIC_DIR);
 
 const app = express();
-app.use(express.json()); // For JSON payloads
-app.use(express.static(STATIC_DIR));
 app.use(cors());
+app.use(express.json()); // For JSON payloads
+
 
 export const jwtSecret = process.env.JWT_SECRET;
 if (!jwtSecret) {
@@ -247,3 +247,5 @@ app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Resp
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
+app.use(express.static(STATIC_DIR));
