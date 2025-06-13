@@ -78,7 +78,7 @@ function Calendar(props : CalendarProps){
       function update(new_date : Date){
 
         setSelectedDay(new_date.getDate());
-        setSelectedEvents((new_date.toISOString().split('T')[0]));
+        setSelectedEvents((new_date.toLocaleDateString('en-CA')));
 
       }
 

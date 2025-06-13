@@ -68,35 +68,12 @@ function Dashboard(props: Dashboard_Props) {
     );
   }
 
-  function Toggle() {
-    return (
-      <div className="Bottom_Container">
-        <div className="Toggle_Container">
-          <p>Restrict by code?</p>
-          <label className="checkbox">
-            <input
-              onChange={e => props.setRestricted(e.target.checked)}
-              type="checkbox"
-            />
-            <span className="box"></span>
-          </label>
-        </div>
-        <div className="Input_Container">
-          <input
-            onChange={e => props.setPermissionCode(e.target.value)}
-            type="Text"
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div>
       {fetchedEvents.map((thing, i) => (
         <Approval key={`${thing.title}-${thing.when}-${i}`} event={thing} />
       ))}
-      <Toggle />
     </div>
   );
 }
