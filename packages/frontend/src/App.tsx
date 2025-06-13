@@ -55,7 +55,7 @@ function App() {
         console.log("✅ Event successfully added:", result.event);
     
         // Optional: Update local UI state
-        setNewEvents(prev => [...prev, newEvent]);
+        /*setNewEvents(prev => [...prev, newEvent]);
         setEvents(prev => {
           const existingDay = prev[date];
           if (!existingDay) return prev;
@@ -67,7 +67,7 @@ function App() {
               events: [...existingDay.events, newEvent]
             }
           };
-        });
+        });*/
       } catch (error) {
         console.error("Error during API call to /dashboard/add:", error);
       }
