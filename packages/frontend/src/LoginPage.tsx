@@ -34,6 +34,7 @@ async function loginUser(
   setAuthToken(token);
   localStorage.setItem("authToken", token);
   navigate("/"); // ✅ redirect to homepage
+  window.location.reload();
   return {};
 }
 
