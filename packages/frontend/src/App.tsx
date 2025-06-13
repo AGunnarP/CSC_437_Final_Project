@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Calendar from './calendar.tsx'
 import Form from './form.tsx'
 import Dashboard from './dashboard.tsx';
 import type { EventProps } from './calendar.tsx';
+import { LoginPage } from './LoginPage.tsx';
+import { ProtectedRoute } from './ProtectedRoute.tsx';
 
 export type Day = {
 
@@ -20,45 +22,80 @@ function App() {
       
     const curr_calendar = generateDateWeekdayMap(2025);
     const [day_dictionary, setEvents] = useState<Record<string,Day>>(curr_calendar);
-
     const [newEvents, setNewEvents] = useState<EventProps[]>([]);
     const [permissionCode, setPermissionCode] = useState<string>('');
     const [restricted, setRestricted] = useState<boolean>(false);
+    const [authToken, setAuthToken] = useState<string>("")
+
+    console.log(authToken)
 
     console.log(newEvents);
 
-    const addEvent = (newEvent: EventProps, date: string) => {
-
-        if(restricted && permissionCode !== '' && newEvent.permissionCode !== permissionCode)
-            return
-      
+    const addEvent = async (newEvent: EventProps, date: string) => {
+      if (restricted && permissionCode !== '' && newEvent.permissionCode !== permissionCode) {
+        return;
+      }
+    
+      try {
+        const response = await fetch("http://localhost:3000/api/dashboard/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ date, event: newEvent })
+        });
+    
+        if (!response.ok) {
+          console.error("❌ Failed to add event to dashboard.");
+          return;
+        }
+    
+        const result = await response.json();
+        console.log("✅ Event successfully added:", result.event);
+    
+        // Optional: Update local UI state
+        setNewEvents(prev => [...prev, newEvent]);
         setEvents(prev => {
           const existingDay = prev[date];
-      
-          if (!existingDay) return prev; // ignore if date not found
-      
+          if (!existingDay) return prev;
+    
           return {
             ...prev,
             [date]: {
               ...existingDay,
-              events: [...existingDay.events, newEvent] // add new event
+              events: [...existingDay.events, newEvent]
             }
           };
         });
+      } catch (error) {
+        console.error("Error during API call to /dashboard/add:", error);
+      }
+    };
+    
 
-        setNewEvents(prev => 
-        [...prev, newEvent]
-        );
-      
-        console.log(`Added event on ${date}:`, newEvent);
-      };
-
-      const removeEvent = (eventToRemove: EventProps, date: string) => {
+    const removeEvent = async (eventToRemove: EventProps, date: string) => {
+      try {
+        const response = await fetch("/api/dashboard/remove", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ date, event: eventToRemove })
+        });
+    
+    
+        if (!response.ok) {
+          console.error("❌ Failed to delete event from server");
+          return;
+        }
+    
+        // If successful, update local state
         setEvents(prev => {
           const existingDay = prev[date];
-      
-          if (!existingDay) return prev; // date not found
-      
+          if (!existingDay) return prev;
+    
           return {
             ...prev,
             [date]: {
@@ -69,22 +106,99 @@ function App() {
             }
           };
         });
-
-        setNewEvents(prev => (
-
-            prev.filter(event => !areEventsEqual(event, eventToRemove))
-
-        ));
-
-      };
-
-      const approve_event = (approved : EventProps) => {
-
-        setNewEvents(prev => 
-            prev.filter(event => !areEventsEqual(approved,event))
-          );
-
+    
+        setNewEvents(prev =>
+          prev.filter(event => !areEventsEqual(event, eventToRemove))
+        );
+      } catch (error) {
+        console.error("Error during API call to delete event:", error);
       }
+    };
+    
+    
+
+    const approve_event = async (approved: EventProps) => {
+      try {
+        const response = await fetch("/api/dashboard/approve", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`
+          },
+          body: JSON.stringify({
+            date: approved.when,
+            event: approved
+          })
+        });
+    
+        if (!response.ok) {
+          console.error("❌ Failed to approve event on server");
+          return;
+        }
+    
+        setNewEvents(prev =>
+          prev.filter(event => !areEventsEqual(event, approved))
+        );
+    
+        console.log("✅ Event approved and moved to events collection");
+    
+        // 🔁 Refresh calendar from /api/events
+        await refreshApprovedEvents();
+      } catch (error) {
+        console.error("Error approving event:", error);
+      }
+    };
+
+    const refreshApprovedEvents = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+    
+        const response = await fetch("/api/events", {
+          headers: {
+            Authorization: `Bearer ${token ?? ""}`
+          }
+        });
+    
+        if (!response.ok) {
+          console.error("❌ Failed to fetch approved events");
+          return;
+        }
+    
+        const eventList: EventProps[] = await response.json();
+    
+        setEvents(prev => {
+          // First, make a fresh copy of prev
+          const updated = { ...prev };
+    
+          // 🧹 Step 1: clear out ALL existing events
+          for (const key in updated) {
+            updated[key] = {
+              ...updated[key],
+              events: []
+            };
+          }
+    
+          // 🧩 Step 2: insert the new events by date
+          for (const event of eventList) {
+            const date = event.when;
+            if (!updated[date]) continue;
+    
+            updated[date] = {
+              ...updated[date],
+              events: [...updated[date].events, event]
+            };
+          }
+    
+          return updated;
+        });
+    
+        console.log("✅ Approved events refreshed and merged");
+      } catch (err) {
+        console.error("❌ Error refreshing events:", err);
+      }
+    };
+    
+    
 
       function areEventsEqual(a: EventProps, b: EventProps): boolean {
         return (
@@ -96,17 +210,57 @@ function App() {
           a.permissionCode === b.permissionCode
         );
       }
+      
+
+      useEffect(() => {
+        const savedToken = localStorage.getItem("authToken");
+        if (savedToken) {
+          setAuthToken(savedToken);
+        }
+        refreshApprovedEvents()
+      }, []);
 
 
     return(
 
-        <Router>
-            <Routes>
-                <Route path="/" element={<Calendar day_dictionary={day_dictionary}></Calendar>} />
-                <Route path="/form" element={<Form addEvent={addEvent} />} />
-                <Route path="/dashboard" element={<Dashboard events={newEvents} removeEvent={removeEvent} setPermissionCode={setPermissionCode} approve_event={approve_event} setRestricted={setRestricted}></Dashboard>}></Route>
-            </Routes>
-        </Router>
+      <Router>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/login" element={<LoginPage setAuthToken={setAuthToken} />} />
+        <Route path="/register" element={<LoginPage isRegistering={true} setAuthToken={setAuthToken} />} />
+    
+        {/* Protected Routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute authToken={authToken}>
+              <Calendar day_dictionary={day_dictionary}/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/form"
+          element={
+            <ProtectedRoute authToken={authToken}>
+              <Form addEvent={addEvent} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute authToken={authToken}>
+              <Dashboard
+                removeEvent={removeEvent}
+                setPermissionCode={setPermissionCode}
+                approve_event={approve_event}
+                setRestricted={setRestricted}
+              />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
 
         
 

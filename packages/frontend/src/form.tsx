@@ -1,5 +1,5 @@
 import type { EventProps } from './calendar.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './form.css'
 
 type formProps = {
@@ -28,7 +28,7 @@ function Form(props: formProps){
         };
     
         props.addEvent(data, when);
-        navigate('/dashboard');
+        navigate('/');
         
       };
 
@@ -75,7 +75,7 @@ function Form(props: formProps){
 
                 <div className="Go_Back_Container">
 
-                    <a href="/">Go back</a>
+                    <Link to="/">Go back</Link>
 
                 </div>
 

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import type {Day} from './App.tsx'
 import './Calendar.css';
+import Header from './Header';
+
+
 
 type CalendarProps = {
 
@@ -35,6 +38,7 @@ type navProps = {
 
 }
 
+
 function Calendar(props : CalendarProps){
 
     const [today, setCurrentDate] = useState(new Date());
@@ -57,6 +61,7 @@ function Calendar(props : CalendarProps){
     
     const [selectedEvents, setSelectedEvents] = useState<string>(today.toISOString().split('T')[0]);
     console.log(`Selected events is: ${selectedEvents}`);
+
 
     const Day = ({ day_num, date_index }: DayProps) => {
 
@@ -99,11 +104,11 @@ function Calendar(props : CalendarProps){
           today.getMonth() + 1 === month // JS months are 0-indexed
         );
       }
-    
 
     return(
 
         <div className="body_container">
+            <Header/>
 
             <div className = "Calendar_Container">
 
