@@ -161,7 +161,9 @@ function Calendar_nav(props : navProps){
 
         <div className="nav_container">
         <button onClick={props.nav_prev} className="nav_prev">{'<'}</button>
-        <p>{props.month} {props.year}</p>
+        <div className = "date_container">
+            <p>{props.month} {props.year}</p>
+        </div>
         <button onClick={props.nav_fwd} className="nav_fwd">{'>'}</button>
     </div>
 
@@ -192,23 +194,21 @@ export function Event(props : EventProps){
 
     return(
 
-        <div className="Event_Container">
 
-            <div className="Event">
+        <div className="Event">
 
-            <dl>
-                <dt>{props.title}</dt>
+        <dl>
+            <dt>{props.title}</dt>
 
-                <dd>Who: {props.who}</dd>
-                <dd>When: {props.when}</dd>
-                <dd>Where: {props.where}</dd>
-                <dd>What: {props.what}</dd>
+            <dd>Who: {props.who}</dd>
+            <dd>When: {props.when}</dd>
+            <dd>Where: {props.where}</dd>
+            <dd>What: {props.what}</dd>
 
-            </dl>
-
-            </div>
+        </dl>
 
         </div>
+
         
     );
 

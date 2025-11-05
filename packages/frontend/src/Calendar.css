@@ -99,6 +99,14 @@
 
 }
 
+.date_container{
+
+    display:flex;
+    width:8vw;
+    justify-content: center;
+
+}
+
 .nav_container > *{
 
 
@@ -129,14 +137,14 @@
 
 .Events_Container{
 
-    display:flex;
+    /*display:flex;*/
     justify-content: center;
     width: 42vw;
     
     margin-top: 2vh;
 
-    border: solid;
-    border-color: black;
+    /*border: solid;
+    border-color: black;*/
 
 }
 
