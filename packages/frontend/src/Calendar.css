@@ -150,11 +150,21 @@
 
 .Event{
 
+    position:relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     margin-right: 2vw;
+
+}
+
+.Remove_Event{
+
+    position:absolute;
+    right:0;
+    bottom:0;
+    cursor: pointer;
 
 }
 

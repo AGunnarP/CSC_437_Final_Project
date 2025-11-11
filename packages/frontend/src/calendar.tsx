@@ -207,6 +207,8 @@ export function Event(props : EventProps){
 
         </dl>
 
+        <a className="Remove_Event">❌</a>
+
         </div>
 
         
