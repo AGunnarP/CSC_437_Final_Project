@@ -33,6 +33,7 @@ async function loginUser(
   console.log("✅ Auth token:", token);
   setAuthToken(token);
   localStorage.setItem("authToken", token);
+  localStorage.setItem("Username", username);
   navigate("/"); // ✅ redirect to homepage
   window.location.reload();
   return {};

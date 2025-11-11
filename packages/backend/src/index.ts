@@ -93,7 +93,7 @@ app.post("/auth/register", (req, res) => {
 
 
 
-app.post("/api/dashboard/add", async (req: Request, res: Response) => {
+app.post("/api/dashboard/add", verifyAuthToken, async (req: Request, res: Response) => {
     const { date, event } = req.body;
 
     if (!date || !event) {
@@ -107,6 +107,20 @@ app.post("/api/dashboard/add", async (req: Request, res: Response) => {
         const dashboardCollection = db.collection(collectionName);
 
         // Insert a new dashboard event document
+
+        console.log("adding event")
+        console.log(`event who == ${event.who}`)
+        console.log(`req.user?.username == ${req.user?.username}`)
+
+        if(!event.who.trim())
+          if(req.user?.username )
+            event.who = req.user.username;
+          else
+              event.who = "Anonymous";
+
+        
+            
+
         const result = await dashboardCollection.insertOne({
         date,
         event    
