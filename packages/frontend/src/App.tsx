@@ -197,6 +197,49 @@ function App() {
         console.error("❌ Error refreshing events:", err);
       }
     };
+
+    const removeExistingEvent = async (eventToRemove: EventProps, date: string) => {
+
+      try{
+
+        const response = await fetch("/api/remove", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ date, event: eventToRemove })
+        });
+
+        if (!response.ok) {
+          console.error("❌ Failed to delete existing event from server");
+          return;
+        }
+    
+        // If successful, update local state
+        setEvents(prev => {
+          const existingDay = prev[date];
+          if (!existingDay) return prev;
+    
+          return {
+            ...prev,
+            [date]: {
+              ...existingDay,
+              events: existingDay.events.filter(event =>
+                !areEventsEqual(event, eventToRemove)
+              )
+            }
+          };
+        });
+
+
+      }catch(error){
+
+        console.error("Problem removing existing event", error);
+
+      }
+
+    }
     
     
 
