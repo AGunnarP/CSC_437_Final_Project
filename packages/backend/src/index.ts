@@ -139,7 +139,7 @@ app.post("/api/dashboard/add", verifyAuthToken, async (req: Request, res: Respon
 
 app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Response) => {
 
-    if (req.user?.username !== "Tubular Timothy") {
+    if (!req.user?.username  || req.user?.username !== "Tubular Timothy") {
             res.status(403).json({ error: "Forbidden: You are not authorized to access this resource." });
             return;
       }
@@ -234,6 +234,47 @@ app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Resp
     } catch (err) {
       console.error("Error approving event:", err);
       res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/remove", verifyAuthToken, async (req: Request, res: Response) => 
+  {
+    try{
+
+      const { date, event } = req.body;
+  
+      if (!date || !event) {
+          res.status(400).json({ error: "Missing date or event" });
+          return;
+      }
+
+      if (!req.user?.username || (req.user?.username !== "Tubular Timothy" && event.Who!=req.user?.username)) {
+            res.status(403).json({ error: "Forbidden: You are not authorized to access this resource." });
+            return;
+      }
+
+      const db = mongoClient.db(process.env.DB_NAME);
+      const eventsCollection = db.collection(process.env.EVENTS_COLLECTION_NAME || "events");
+
+      const deleteResult = await eventsCollection.deleteOne({
+        date,
+        event
+      });
+
+      if (deleteResult.deletedCount === 0) {
+        res.status(404).json({ error: "Event not found" });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Event removed",
+      event: event});
+
+    }catch(error){
+
+      console.error("Error removing event");
+      res.status(500).json({ error: "Internal server error" });
+
     }
   });
 
