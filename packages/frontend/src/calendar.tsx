@@ -3,11 +3,12 @@ import type {Day} from './App.tsx'
 import './Calendar.css';
 import Header from './Header';
 
-
+var removeExistingEvent : (eventToRemove: EventProps, date: string) => Promise<void>;
 
 type CalendarProps = {
 
     day_dictionary : Record<string, Day>;
+    removeExistingEvent : (eventToRemove: EventProps, date: string) => Promise<void>;
 
 }
 
@@ -40,6 +41,8 @@ type navProps = {
 
 
 function Calendar(props : CalendarProps){
+
+    removeExistingEvent = props.removeExistingEvent;
 
     const [today, setCurrentDate] = useState(new Date());
     const year = today.getFullYear();        // e.g., 2025
@@ -192,6 +195,10 @@ function Day_Headers(){
 
 export function Event(props : EventProps){
 
+    const handleClick = async () => {
+        await removeExistingEvent(props, props.when);
+    };
+
     return(
 
 
@@ -207,7 +214,8 @@ export function Event(props : EventProps){
 
         </dl>
 
-        <a className="Remove_Event">❌</a>
+
+        <a className="Remove_Event" onClick={handleClick}>❌</a>
 
         </div>
 

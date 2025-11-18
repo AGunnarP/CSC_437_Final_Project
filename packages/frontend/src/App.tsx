@@ -151,6 +151,8 @@ function App() {
 
     const refreshApprovedEvents = async () => {
       try {
+        
+        
         const token = localStorage.getItem("authToken");
     
         const response = await fetch("/api/events", {
@@ -212,6 +214,11 @@ function App() {
         });
 
         if (!response.ok) {
+
+          //LOGOUT
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("Username");
+          window.location.reload();
           console.error("❌ Failed to delete existing event from server");
           return;
         }
@@ -277,7 +284,7 @@ function App() {
           path="/"
           element={
             <ProtectedRoute authToken={authToken}>
-              <Calendar day_dictionary={day_dictionary}/>
+              <Calendar day_dictionary={day_dictionary} removeExistingEvent={removeExistingEvent}/>
             </ProtectedRoute>
           }
         />
