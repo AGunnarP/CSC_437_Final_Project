@@ -162,7 +162,7 @@ function App() {
         });
     
         if (!response.ok) {
-          console.error("❌ Failed to fetch approved events");
+          console.error("❌ Failed to fetch approved events", response.json());
           return;
         }
     
@@ -278,16 +278,10 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage setAuthToken={setAuthToken} />} />
         <Route path="/register" element={<LoginPage isRegistering={true} setAuthToken={setAuthToken} />} />
+        <Route
+          path="/" element={<Calendar day_dictionary={day_dictionary} removeExistingEvent={removeExistingEvent}/>}/>
     
         {/* Protected Routes */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute authToken={authToken}>
-              <Calendar day_dictionary={day_dictionary} removeExistingEvent={removeExistingEvent}/>
-            </ProtectedRoute>
-          }
-        />
         <Route
           path="/form"
           element={

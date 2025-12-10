@@ -279,7 +279,7 @@ app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Resp
   });
 
 
-  app.get("/api/events", verifyAuthToken, async (req: Request, res: Response) => {
+  app.get("/api/events", async (req: Request, res: Response) => {
     try {
       const db = mongoClient.db(process.env.DB_NAME);
       const eventsCollection = db.collection(process.env.EVENTS_COLLECTION_NAME || "events");
