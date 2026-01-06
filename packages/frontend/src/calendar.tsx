@@ -132,6 +132,10 @@ function Calendar(props : CalendarProps){
 
                 </div>
 
+                <div className="Bottom_Margin">
+
+                </div>
+
             </div>
 
 
@@ -210,6 +214,7 @@ export function Event(props : EventProps){
             <dd>Who: {props.who}</dd>
             <dd>When: {props.when}</dd>
             <dd>Where: {props.where}</dd>
+            <dd></dd>
             <dd>What: {props.what}</dd>
 
         </dl>
