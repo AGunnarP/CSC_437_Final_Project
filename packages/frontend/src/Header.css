@@ -30,6 +30,14 @@
 
 }
 
+.UserName{
+
+    display: flex;
+    align-items: center;
+    margin: auto;
+
+}
+
 .Header_Login{
 
     color:white;

@@ -1,0 +1,15 @@
+.react_app_container{
+
+    all:unset;
+    display: block;
+
+    width:100%;
+    height:100%;
+
+}
+
+.myplugin-app * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

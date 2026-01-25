@@ -139,7 +139,7 @@ app.post("/api/dashboard/add", verifyAuthToken, async (req: Request, res: Respon
 
 app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Response) => {
 
-    if (!req.user?.username  || req.user?.username !== "Tubular Timothy") {
+    if (!req.user?.username  || req.user?.username !== "admin") {
             res.status(403).json({ error: "Forbidden: You are not authorized to access this resource." });
             return;
       }
@@ -248,7 +248,7 @@ app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Resp
           return;
       }
 
-      if (!req.user?.username || (req.user?.username !== "Tubular Timothy" && event.Who!=req.user?.username)) {
+      if (!req.user?.username || (req.user?.username !== "admin" && event.Who!=req.user?.username)) {
             res.status(403).json({ error: "Forbidden: You are not authorized to access this resource." });
             return;
       }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import type {Day} from './App.tsx'
 import './Calendar.css';
 import Header from './Header';
@@ -229,19 +230,14 @@ export function Event(props : EventProps){
 
 }
 
-function AddMoreButton(){
-
-    return(
-        <div className="Container_Container">
-            <div className="Add_more_container">
-
-                <a className="Add_More_Button" href="/form">+ Add more</a>
-
-            </div>
-
-        </div>
-    );
-
+function AddMoreButton() {
+  return (
+    <div className="Container_Container">
+      <div className="Add_more_container">
+        <Link className="Add_More_Button" to="/form">+ Add more</Link>
+      </div>
+    </div>
+  );
 }
 
 
