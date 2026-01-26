@@ -306,6 +306,5 @@ app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
 
-https.createServer(null, app).listen(443);
 
 app.use(express.static(STATIC_DIR));
