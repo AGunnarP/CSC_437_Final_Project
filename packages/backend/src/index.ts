@@ -17,10 +17,13 @@ const STATIC_DIR = process.env.STATIC_DIR!; // "../frontend/dist"
 const staticPath = path.resolve(process.cwd(), STATIC_DIR);
 
 const app = express();
+
+app.set("trust proxy", true);
+
 app.use(cors());
 app.use(express.json()); // For JSON payloads
 
-app.set("trust proxy", true);
+
 
 
 export const jwtSecret = process.env.JWT_SECRET;
@@ -31,6 +34,7 @@ if (!jwtSecret) {
 app.locals.JWT_SECRET = jwtSecret;
 
 const provider = new CredentialsProvider(mongoClient);
+
 
 function generateAuthToken(username: string, jwtSecret: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -48,6 +52,8 @@ function generateAuthToken(username: string, jwtSecret: string): Promise<string>
         );
     });
 }
+
+
 
 app.get(Object.values(ValidRoutes), (_req, res) =>{
 
@@ -299,6 +305,8 @@ app.get("/api/dashboard/events", verifyAuthToken, async (req: Request, res: Resp
   });
   
   
+//app.use(express.static(STATIC_DIR));
+
 
 
 app.listen(PORT, () => {
@@ -306,4 +314,4 @@ app.listen(PORT, () => {
 });
 
 
-app.use(express.static(STATIC_DIR));
+
