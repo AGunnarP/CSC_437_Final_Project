@@ -39,7 +39,7 @@ function App() {
       }
     
       try {
-        const response = await fetch("/api/dashboard/add", {
+        const response = await fetch("https://api.apiforslocialism.org/api/dashboard/add", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ function App() {
 
     const removeEvent = async (eventToRemove: EventProps, date: string) => {
       try {
-        const response = await fetch("/api/dashboard/remove", {
+        const response = await fetch("https://api.apiforslocialism.org/api/dashboard/remove", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +121,7 @@ function App() {
 
     const approve_event = async (approved: EventProps) => {
       try {
-        const response = await fetch("/api/dashboard/approve", {
+        const response = await fetch("https://api.apiforslocialism.org/api/dashboard/approve", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -157,7 +157,7 @@ function App() {
         
         const token = localStorage.getItem("authToken");
     
-        const response = await fetch("/api/events", {
+        const response = await fetch("https://api.apiforslocialism.org/api/events", {
           headers: {
             Authorization: `Bearer ${token ?? ""}`
           }
@@ -206,7 +206,7 @@ function App() {
 
       try{
 
-        const response = await fetch("/api/remove", {
+        const response = await fetch("https://api.apiforslocialism.org/api/remove", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
