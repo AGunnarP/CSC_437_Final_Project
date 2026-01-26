@@ -55,11 +55,11 @@ function generateAuthToken(username: string, jwtSecret: string): Promise<string>
 
 
 
-app.get(Object.values(ValidRoutes), (_req, res) =>{
+//app.get(Object.values(ValidRoutes), (_req, res) =>{
 
-    res.sendFile(path.join(staticPath, "index.html"));
+   // res.sendFile(path.join(staticPath, "index.html"));
 
-});
+//});
 
 
 
