@@ -20,6 +20,9 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // For JSON payloads
 
+const http = require('http');
+const https = require('https');
+
 
 export const jwtSecret = process.env.JWT_SECRET;
 if (!jwtSecret) {
