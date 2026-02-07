@@ -16,12 +16,24 @@
 
 }
 
+
 .Day_Headers > *{
 
     text-align: center;
 
     flex:1;
 
+
+}
+
+@media(max-width: 760px){
+
+    .Day_Headers{
+
+        width: 65vw;
+
+    }   
+    
 
 }
 
@@ -89,6 +101,17 @@
 
 }
 
+@media(max-width: 760px){
+
+    .Calendar_Container{
+
+        margin-left: 2vw;
+        margin-right: 2vw;
+
+    }
+
+}   
+
 .Bottom_Margin{
 
     height:7vh;
@@ -102,7 +125,7 @@
 
     justify-content: center;
 
-    width: 42vw;
+    /*width: 42vw;*/
 
 }
 
@@ -118,6 +141,19 @@
 
 
     margin: 1px;
+
+}
+
+@media(max-width:760px){
+
+    .nav_container > *{
+
+
+    margin: 0;
+    margin-left: 2vw;
+    margin-right: 2vw;
+
+}
 
 }
 

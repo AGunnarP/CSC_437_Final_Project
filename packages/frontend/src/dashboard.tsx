@@ -22,7 +22,7 @@ function Dashboard(props: Dashboard_Props) {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
   
-    fetch('/api/dashboard/events', {
+    fetch('https://api.apiforslocialism.org/api/dashboard/events', {
       headers: {
         Authorization: `Bearer ${token ?? ''}`
       }

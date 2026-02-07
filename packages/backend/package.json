@@ -1,10 +1,11 @@
 {
   "name": "csc437-monorepo-backend",
   "version": "1.0.0",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon",
-    "build": "npx tsc",
+    "dev": "nodemon --watch src --exec tsx src/index.ts",
+    "build": "tsc",
     "start": "npm run build && node dist/index.js"
   },
   "author": "",
@@ -25,6 +26,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.5",
     "nodemon": "^3.1.9",
+    "tsx": "^3.12.7",
     "typescript": "^5.7.3"
   }
 }

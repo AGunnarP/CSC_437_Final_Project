@@ -185,13 +185,13 @@ function Day_Headers(){
     return(
         <div className="Day_Headers">
 
-            <p>Monday</p>
-            <p>Tuesday</p>
-            <p>Wednesday</p>
-            <p>Thursday</p>
-            <p>Friday</p>
-            <p>Saturday</p>
-            <p>Sunday</p>
+            <p>M</p>
+            <p>T</p>
+            <p>W</p>
+            <p>Th</p>
+            <p>F</p>
+            <p>S</p>
+            <p>Su</p>
 
         </div>
     );

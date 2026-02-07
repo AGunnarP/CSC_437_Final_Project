@@ -18,7 +18,7 @@ async function loginUser(
   setAuthToken: React.Dispatch<React.SetStateAction<string>>,
   navigate: (path: string) => void
 ): Promise<FormState> {
-  const response = await fetch("/auth/login", {
+  const response = await fetch("https://api.apiforslocialism.org/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -51,7 +51,7 @@ async function handleAuthForm(
 
   if (isRegistering) {
     try {
-      const registerRes = await fetch("/auth/register", {
+      const registerRes = await fetch("https://api.apiforslocialism.org/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
